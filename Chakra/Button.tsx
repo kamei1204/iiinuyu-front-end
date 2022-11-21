@@ -28,7 +28,7 @@ const Button: ComponentStyleConfig = {
         },
         outline: {
             color: "orange.400",
-            border: "1px solid",
+            border: "2px solid",
             borderColor: "orange.400",
         },
         oauth: {

@@ -6,7 +6,6 @@ type PageContentProps = {
 }
 
 const PageContent:React.FC<PageContentProps> = ({ children }) => {
-    console.log("children HERE", children)
     return (
         <Flex  justify="center" p={6}>
             <Flex  width="100%" justify="center" maxWidth="1240px">

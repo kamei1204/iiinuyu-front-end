@@ -15,7 +15,7 @@ const PostForm = () => {
             <Icon as={GiJumpingDog} fontSize={24} color="gray.400" cursor="pointer" mr={2} textColor="pink.400"/>
                 <Input 
                     bg="gray.50"
-                    placeholder='フレブル大好き集まれ！' fontSize="10pt"  _placeholder={{ color: "gray.500" }}
+                    placeholder='今日〇〇な犬湯に行ってきました！' fontSize="10pt"  _placeholder={{ color: "gray.500" }}
                     borderRadius="5px 0 0 5px" borderColor="gray.200" 
                     _hover={{ bg:"white", borderColor: "orange.400", border:"1px solid orange.400" }}
                     _focus={{ outline: "none", bg: "white", borderColor: "orange.400", border: "1px solid orange.400" }}
@@ -23,7 +23,7 @@ const PostForm = () => {
                 <Button type="submit" width="150px" mr={3}
                     borderRadius="0 5px 5px 0" cursor="pointer" bg="orange.400" color="white" fontWeight="bold" 
                     _hover={{ bg: "orange.300" }}>
-                        <Text color="white">さくせい</Text>
+                        <Text color="white">投稿する</Text>
                 </Button>
                 <Icon
                     as={IoImageOutline}
