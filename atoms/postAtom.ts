@@ -7,4 +7,5 @@ export type Post = {
     like         : number;
     comment      : number;
     profileImage : string;
+    imageUrl?    : string;
 }

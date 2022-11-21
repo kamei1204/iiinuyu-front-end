@@ -97,10 +97,13 @@ const PostItem:React.FC<postItem> = ({post})  => {
                     <Text fontSize="10pt">
                         {post.desc}
                     </Text>
-                    <Flex justify="center" align="center" p={2} width="100%">
-                            {/* <Skeleton height="200px" width="100%" borderRadius={4} /> */}
-                        <Image src={post.photo} maxHeight="460px"alt="投稿画像" />
-                    </Flex>
+                    {post.photo && (
+                        <Flex justify="center" align="center" p={2} width="100%">
+                                {/* <Skeleton height="200px" width="100%" borderRadius={4} /> */}
+                            <Image src={post.photo} maxHeight="460px"alt="投稿画像" />
+                        </Flex>
+
+                    )}
                     <Flex ml={1} mb={0.8} fontWeight={600} color="gray.500">
                         <Flex p="8px 10px" align="center" borderRadius={4} _hover={{ color: "gray.300" }} cursor="pointer">
                             <Icon as={BsChat}/>

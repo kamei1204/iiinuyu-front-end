@@ -5,6 +5,7 @@ import Direction from './Direction';
 import SearchInput from './SearchInput';
 import { BsBell } from "react-icons/bs";
 import Icons from './Icons';
+import RightContent from './RightContent/RightContent';
 
 const Navbar = () => {
 
@@ -17,7 +18,8 @@ const Navbar = () => {
                 <Image src="/logo5.png" height={56} width={90} alt="iiinuyu" />
             </Flex>
             <SearchInput />
-            <Icons />
+            <RightContent />
+            {/* <Icons /> */}
             <Direction />
         </Flex>
         );
