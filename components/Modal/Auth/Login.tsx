@@ -1,10 +1,10 @@
 import { Button, Flex, Input, Text } from '@chakra-ui/react'
-import React, { ReactElement, useState } from 'react'
+import React, { useState } from 'react'
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useSetRecoilState } from 'recoil'
 import { authModalState } from '../../../atoms/authModalAtom'
-
-type LoginProps = {
-}
+import { auth } from '../../../FIREBASE/Client'
+import { FIREBASE_ERRORS } from '../../../FIREBASE/Errors'
 
 const Login = () => {
 
@@ -15,7 +15,18 @@ const Login = () => {
         password : "",
     })
 
-    const onSubmit = () => {};
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        signInWithEmailAndPassword(login.email , login.password);
+    };
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLogin((prev) => ({
             ...prev,
@@ -49,6 +60,11 @@ const Login = () => {
                 _hover={{ bg: 'white', border: '1px solid', borderColor: 'orange.500'}}
                 _focus={{  bg: 'white', border: '1px solid', borderColor: 'orange.500' }}
             />
+
+            <Text textAlign='center' fontSize='10pt' color='red'>
+                {FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}
+            </Text>
+
             <Button 
                 width="100%" 
                 height="30px" 
@@ -56,6 +72,18 @@ const Login = () => {
                 type='submit'>
                 ログイン
             </Button>
+            <Flex justify='center' align='center' mb={4} flexDirection='column'>
+                <Text fontSize='9pt' mr={2}>パスワードをお忘れですか？</Text>
+                <Text  
+                    cursor='pointer' 
+                    fontSize='9pt' 
+                    fontWeight={700} 
+                    color='orange.500' 
+                    mr={2} 
+                    onClick={() => setModalState((prev) => ({ ...prev, view: "パスワードの再設定"}))}>
+                    パスワードの再設定はこちらから
+                </Text>
+            </Flex>
             <Flex justify='center' align='center' mb={4}>
                 <Text fontSize='9pt' mr={2}>登録はお済みですか？ |</Text>
                 <Text  

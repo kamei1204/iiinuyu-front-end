@@ -1,8 +1,10 @@
 import { Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import { useRecoilState } from 'recoil'
 import { authModalState } from '../../../atoms/authModalAtom'
+import { auth } from '../../../FIREBASE/Client'
 import AuthInput from './AuthInput'
 import OAuthButtons from './OAuthButtons'
 import ResetPassword from './ResetPassword'
@@ -12,12 +14,8 @@ type AuthModalProps = {}
 // AuthButtonをonClickした際に開くmodal
 const AuthModal:React.FC<AuthModalProps> = () => {
     const [modalState, setModalState] = useRecoilState(authModalState);
-    // const [user, loading, error] = useAuthState(auth);
-
-    // useEffect(() => {
-    //     if(user) handleClose()
-    //     console.log(user)
-    // },[user])
+    // auth = firebase認証 // 認証オブジェクトがユーザーの読み込みとエラーを取得する
+    const [user, loading, error] = useAuthState(auth);
 
     const handleClose = () => {
         setModalState((prev) => ({
@@ -25,6 +23,13 @@ const AuthModal:React.FC<AuthModalProps> = () => {
             open: false,
         }));
     }
+
+    useEffect(() => {
+        if(user) handleClose()
+        console.log(user)
+    },[user]);
+    
+
     return (
         <>
             <Modal isOpen={modalState.open} onClose={handleClose}>
@@ -47,7 +52,6 @@ const AuthModal:React.FC<AuthModalProps> = () => {
                             </>
                             ) : ( <ResetPassword/>)
                         } 
-                            
                         </Flex>
                     </ModalBody>
                 </ModalContent >
@@ -57,3 +61,4 @@ const AuthModal:React.FC<AuthModalProps> = () => {
 }
 
 export default AuthModal
+                            
