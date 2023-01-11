@@ -1,10 +1,12 @@
 import { Button, Flex, Input, Text } from '@chakra-ui/react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '../../../atoms/authModalAtom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
-import { auth } from '../../../FIREBASE/Client';
+import { auth, firestore } from '../../../FIREBASE/Client';
 import { FIREBASE_ERRORS } from '../../../FIREBASE/Errors';
+import { User } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
 
 const SignUp = () => {
     const setModalState = useSetRecoilState(authModalState);
@@ -20,7 +22,7 @@ const SignUp = () => {
     //FIREBASE LOGIC
     const [
         createUserWithEmailAndPassword,
-        user,
+        userCred,
         loading,
         userError,
     ] = useCreateUserWithEmailAndPassword(auth);
@@ -28,7 +30,7 @@ const SignUp = () => {
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if ( error ) setError("")
+        if ( error ) setError("");
         if ( signUp.password !== signUp.confirmPassword) {
             setError("パスワードが違います");
             return;
@@ -43,6 +45,17 @@ const SignUp = () => {
             [event.target.name]: event.target.value,
         }));
     };
+
+    const createUserDocument = async (user:User) => {
+        await addDoc(collection(firestore, "users"), JSON.parse(JSON.stringify(user)));
+    };
+
+    useEffect(() => {
+        if(userCred) {
+            createUserDocument(userCred.user);
+        }
+    }, [userCred])
+    
 
     return (
         <form onSubmit={onSubmit}>
